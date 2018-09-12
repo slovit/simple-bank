@@ -1,9 +1,7 @@
-package model.entity;
+package com.alexslo.bank.model.entity;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Account {
     private int id;

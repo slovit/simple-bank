@@ -1,10 +1,10 @@
-package model.dao.impl;
+package com.alexslo.bank.service.impl;
 
-import model.entity.Transaction;
+import com.alexslo.bank.model.entity.Transaction;
 
 import java.util.List;
 
-public class TransactionDao implements model.dao.TransactionDao {
+public class TransactionDao implements com.alexslo.bank.dao.TransactionDao {
 
     @Override
     public void addTransaction(Transaction transaction) {

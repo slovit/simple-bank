@@ -1,4 +1,4 @@
-package controller.servlets;
+package com.alexslo.bank.controller.servlets;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;

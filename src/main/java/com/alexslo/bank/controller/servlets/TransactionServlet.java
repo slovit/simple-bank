@@ -1,7 +1,7 @@
-package controller.servlets;
+package com.alexslo.bank.controller.servlets;
 
 
-import model.entity.Transaction;
+import com.alexslo.bank.model.entity.Transaction;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;

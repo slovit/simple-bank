@@ -1,7 +1,7 @@
-package model.dao;
+package com.alexslo.bank.dao;
 
-import model.entity.Account;
-import model.entity.AccountType;
+import com.alexslo.bank.model.entity.Account;
+import com.alexslo.bank.model.entity.AccountType;
 
 public interface AccountDao {
 

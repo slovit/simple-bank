@@ -1,7 +1,7 @@
-package model.dao;
+package com.alexslo.bank.dao;
 
-import model.dao.impl.JDBCDaoFactory;
-import model.dao.impl.TransactionDao;
+import com.alexslo.bank.service.impl.JDBCDaoFactory;
+import com.alexslo.bank.service.impl.TransactionDao;
 
 public abstract class DaoFactory {
     private static DaoFactory daoFactory;

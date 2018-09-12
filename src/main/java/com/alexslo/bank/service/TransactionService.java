@@ -1,9 +1,8 @@
-package controller.services;
+package com.alexslo.bank.service;
 
-import model.entity.Account;
-import model.entity.Transaction;
+import com.alexslo.bank.model.entity.Account;
+import com.alexslo.bank.model.entity.Transaction;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -1,13 +1,13 @@
-package model.dao.impl;
+package com.alexslo.bank.service.impl;
 
 
-import model.entity.User;
-import model.entity.UserRole;
+import com.alexslo.bank.model.entity.User;
+import com.alexslo.bank.model.entity.UserRole;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDao implements model.dao.UserDao {
+public class UserDao implements com.alexslo.bank.dao.UserDao {
 
     private final List<User> store = new ArrayList<>();
 

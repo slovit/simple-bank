@@ -1,4 +1,4 @@
-package model.entity;
+package com.alexslo.bank.model.entity;
 
 public class User {
     private int userID;
