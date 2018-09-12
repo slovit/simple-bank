@@ -5,11 +5,15 @@ import com.alexslo.bank.model.entity.AccountType;
 
 public interface AccountDao {
 
-    void createAccount(Account account);
+    void addAccount(Account account);
 
     Account getAccountByUserId(int id);
+
+    Account getAccountByAccountId(int id);
 
     double getBalanceByAccountId(int id);
 
     AccountType getAccountTypeByAccountId(int id);
+
+    String getAllAccountInfo(Account account);
 }

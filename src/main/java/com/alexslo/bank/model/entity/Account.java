@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 
 public class Account {
     private int id;
+    private int user_id;
     private double balance;
     private AccountType accountType;
     private LocalDateTime creationDate;
@@ -14,7 +15,8 @@ public class Account {
 
     }
 
-    public Account(int accountID, double balance, AccountType accountType, LocalDateTime creationDate, LocalDate expirationDate) {
+    public Account(int user_id, int accountID, double balance, AccountType accountType, LocalDateTime creationDate, LocalDate expirationDate) {
+        this.user_id = user_id;
         this.id = accountID;
         this.balance = balance;
         this.accountType = accountType;
@@ -69,6 +71,14 @@ public class Account {
 
     public void addToBalance(double amount){
         this.balance = balance + amount;
+    }
+
+    public void setUser_id(int id){
+        this.user_id = id;
+    }
+
+    public int getUser_id(){
+        return user_id;
     }
 
 }

@@ -4,15 +4,15 @@ import java.time.LocalDateTime;
 
 public class Transaction {
     private int account_id;
-    private String fromAccount;
-    private String toAccountId;
+    private int fromAccount;
+    private int toAccountId;
     private double amount;
     private LocalDateTime transactionDate;
 
     public Transaction() {
     }
 
-    public Transaction(String formAccountId, String toAccountId, double amount, LocalDateTime transactionDate) {
+    public Transaction(int formAccountId, int toAccountId, double amount, LocalDateTime transactionDate) {
      //   this.account_id = account_id;
         this.fromAccount = formAccountId;
         this.toAccountId = toAccountId;
@@ -28,19 +28,19 @@ public class Transaction {
         this.account_id = account_id;
     }
 
-    public String getFromAccount() {
+    public int getFromAccount() {
         return fromAccount;
     }
 
-    public void setFromAccount(String fromAccount) {
+    public void setFromAccount(int fromAccount) {
         this.fromAccount = fromAccount;
     }
 
-    public String getToAccountId() {
+    public int getToAccountId() {
         return toAccountId;
     }
 
-    public void setToAccountId(String toAccountId) {
+    public void setToAccountId(int toAccountId) {
         this.toAccountId = toAccountId;
     }
 
