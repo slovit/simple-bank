@@ -1,17 +1,17 @@
-package com.alexslo.bank.service.impl;
+package com.alexslo.bank.mem;
 
 
-import com.alexslo.bank.model.entity.User;
-import com.alexslo.bank.model.entity.UserRole;
+import com.alexslo.bank.model.User;
+import com.alexslo.bank.model.UserRole;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDao implements com.alexslo.bank.dao.UserDao {
+public class UserDaoImpl implements com.alexslo.bank.dao.UserDao {
 
     private final List<User> store = new ArrayList<>();
 
-    public UserDao() {
+    public UserDaoImpl() {
 
     }
 

@@ -1,7 +1,7 @@
 package com.alexslo.bank.dao;
 
-import com.alexslo.bank.model.entity.User;
-import com.alexslo.bank.model.entity.UserRole;
+import com.alexslo.bank.model.User;
+import com.alexslo.bank.model.UserRole;
 
 public interface UserDao {
 

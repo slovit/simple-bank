@@ -1,7 +1,9 @@
 package com.alexslo.bank.dao;
 
-import com.alexslo.bank.model.entity.Account;
-import com.alexslo.bank.model.entity.AccountType;
+import com.alexslo.bank.model.Account;
+import com.alexslo.bank.model.AccountType;
+
+import java.math.BigDecimal;
 
 public interface AccountDao {
 
@@ -9,11 +11,11 @@ public interface AccountDao {
 
     Account getAccountByUserId(int id);
 
-    Account getAccountByAccountId(int id);
+    Account getAccountById(int id);
 
-    double getBalanceByAccountId(int id);
+    BigDecimal getBalanceByAccountId(int id);
 
-    AccountType getAccountTypeByAccountId(int id);
+    AccountType getAccountTypeById(int id);
 
     String getAllAccountInfo(Account account);
 }

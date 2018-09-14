@@ -1,30 +1,29 @@
 package com.alexslo.bank.service;
 
 import com.alexslo.bank.model.entity.Account;
-import com.alexslo.bank.service.impl.AccountDao;
+import com.alexslo.bank.mem.AccountDaoImpl;
+
+import java.math.BigDecimal;
 
 public class AccountService {
 
-    AccountDao accDao = new AccountDao();
+    AccountDaoImpl accDao = new AccountDaoImpl();
 
-    public void deposit(int accountId, double amount){
-        Account account = new Account();
-        account = accDao.getAccountByAccountId(accountId);
-        account.setBalance(account.getBalance() + amount);
+    public void deposit(int accountId, BigDecimal amount) {
+        Account account = accDao.getAccountById(accountId);
+        account.setBalance(account.getBalance().add(amount));
     }
 
-    public void withdraw(int accountId, double amount){
-        Account account = new Account();
-        account = accDao.getAccountByAccountId(accountId);
-        account.setBalance(account.getBalance() - amount);
+    public void withdraw(int accountId, BigDecimal amount) {
+        Account account;
+        account = accDao.getAccountById(accountId);
+        account.setBalance(account.getBalance().subtract(amount));
     }
 
-    public void depositFromToAccount(int from_accountId, int to_accountId, double amount){
-        Account from_account = new Account();
-        Account to_account = new Account();
-        from_account = accDao.getAccountByAccountId(from_accountId);
-        to_account = accDao.getAccountByAccountId(to_accountId);
-        from_account.setBalance(from_account.getBalance() - amount);
-        to_account.setBalance(to_account.getBalance() + amount);
+    public void depositFromToAccount(int fromAccountId, int toAccountId, BigDecimal amount) {
+        Account fromAccount = accDao.getAccountById(fromAccountId);
+        Account toAccount = accDao.getAccountById(toAccountId);
+        fromAccount.setBalance(fromAccount.getBalance().subtract(amount));
+        toAccount.setBalance(toAccount.getBalance().add(amount));
     }
 }

@@ -15,13 +15,13 @@ drop table if exists users;
 
 CREATE TABLE `accounts` (
   `account_id` int(11) NOT NULL,
-  `user_id` int(255) NOT NULL,
+  `userId` int(255) NOT NULL,
   `balance` double NOT NULL,
   `creation_date` date NOT NULL,
   `expire_date` date NOT NULL,
   `type` enum('DEPOSIT','CREDIT') NOT NULL,
   PRIMARY KEY (`account_id`),
-  UNIQUE KEY `user_id_UNIQUE` (`user_id`)
+  UNIQUE KEY `user_id_UNIQUE` (`userId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `credit_account` (
@@ -49,10 +49,10 @@ CREATE TABLE `transactions` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `users` (
-  `user_id` int(11) NOT NULL AUTO_INCREMENT,
+  `userId` int(11) NOT NULL AUTO_INCREMENT,
   `login` varchar(100) NOT NULL,
   `password` varchar(256) NOT NULL,
   `role` enum('USER','ADMIN') NOT NULL,
-  PRIMARY KEY (`user_id`),
-  CONSTRAINT `user_id` FOREIGN KEY (`user_id`) REFERENCES `accounts` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
+  PRIMARY KEY (`userId`),
+  CONSTRAINT `userId` FOREIGN KEY (`userId`) REFERENCES `accounts` (`userId`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;

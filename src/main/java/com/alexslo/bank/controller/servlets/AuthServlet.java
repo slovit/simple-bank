@@ -1,6 +1,6 @@
 package com.alexslo.bank.controller.servlets;
 
-import com.alexslo.bank.service.impl.UserDao;
+import com.alexslo.bank.mem.UserDaoImpl;
 import com.alexslo.bank.model.entity.Transaction;
 import com.alexslo.bank.model.entity.UserRole;
 
@@ -34,7 +34,7 @@ public class AuthServlet extends HttpServlet {
         final String login = req.getParameter("login");
         final String password = req.getParameter("password");
 
-        @SuppressWarnings("unchecked") final AtomicReference<UserDao> dao = (AtomicReference<UserDao>) req.getServletContext().getAttribute("com/alexslo/bank/dao");
+        @SuppressWarnings("unchecked") final AtomicReference<UserDaoImpl> dao = (AtomicReference<UserDaoImpl>) req.getServletContext().getAttribute("com/alexslo/bank/dao");
         req.setAttribute("transactions", transactions.values());
         final HttpSession session = req.getSession();
 

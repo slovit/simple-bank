@@ -1,4 +1,4 @@
-package com.alexslo.bank.model.entity;
+package com.alexslo.bank.model;
 
 import java.time.LocalDateTime;
 

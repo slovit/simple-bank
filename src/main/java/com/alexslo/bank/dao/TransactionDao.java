@@ -1,6 +1,6 @@
 package com.alexslo.bank.dao;
 
-import com.alexslo.bank.model.entity.Transaction;
+import com.alexslo.bank.model.Transaction;
 
 import java.util.List;
 

@@ -1,13 +1,15 @@
-package com.alexslo.bank.service.impl;
+package com.alexslo.bank.mem;
 
-import com.alexslo.bank.model.entity.Account;
-import com.alexslo.bank.model.entity.AccountType;
+import com.alexslo.bank.model.Account;
+import com.alexslo.bank.model.AccountType;
 
+import java.math.BigDecimal;
 import java.util.*;
 
-public class AccountDao implements com.alexslo.bank.dao.AccountDao {
+public class AccountDaoImpl implements com.alexslo.bank.dao.AccountDao {
 
     private List<Account> accounts = new ArrayList<>();
+    private Map<Integer,Account> account = new HashMap<>();
 
 
     @Override
@@ -19,7 +21,7 @@ public class AccountDao implements com.alexslo.bank.dao.AccountDao {
     public Account getAccountByUserId(int id) {
         Account result = new Account();
         for(Account account: this.accounts){
-            if(account.getUser_id() == id){
+            if(account.getUserId() == id){
                 result = account;
             }
         }
@@ -27,7 +29,7 @@ public class AccountDao implements com.alexslo.bank.dao.AccountDao {
     }
 
     @Override
-    public Account getAccountByAccountId(int id) {
+    public Account getAccountById(int id) {
         Account result = new Account();
         for(Account account: this.accounts){
             if(account.getId() == id){
@@ -38,18 +40,18 @@ public class AccountDao implements com.alexslo.bank.dao.AccountDao {
     }
 
     @Override
-    public double getBalanceByAccountId(int id) {
-        double result = 0;
+    public BigDecimal getBalanceByAccountId(int id) {
+        BigDecimal result = new BigDecimal(0);
        for(Account account: this.accounts){
            if(account.getId() == id){
-              result = account.getBalance();
+              result.add(account.getBalance());
            }
         }
         return result;
     }
 
     @Override
-    public AccountType getAccountTypeByAccountId(int id) {
+    public AccountType getAccountTypeById(int id) {
         Account result = new Account();
         for(Account account: this.accounts){
             if(account.getId() == id){
@@ -61,7 +63,7 @@ public class AccountDao implements com.alexslo.bank.dao.AccountDao {
 
     @Override
     public String getAllAccountInfo(Account account) {
-        return String.format("Account type: %s \nAccount balance: %f\nCreation date: %tD\nExpire date: %tD",
-                account.getAccountType(),account.getBalance(),account.getCreationDate(),account.getExpirationDate());
+        return String.format("Account type: %s \nAccount balance: %f\nCreation date: %tD",
+                account.getAccountType(),account.getBalance(),account.getCreationDate());
     }
 }

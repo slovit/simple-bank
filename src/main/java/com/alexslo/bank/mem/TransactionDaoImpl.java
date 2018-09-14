@@ -1,11 +1,11 @@
-package com.alexslo.bank.service.impl;
+package com.alexslo.bank.mem;
 
-import com.alexslo.bank.model.entity.Transaction;
+import com.alexslo.bank.model.Transaction;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TransactionDao implements com.alexslo.bank.dao.TransactionDao {
+public class TransactionDaoImpl implements com.alexslo.bank.dao.TransactionDao {
 
     private List<Transaction> transactions = new ArrayList<>();
 
