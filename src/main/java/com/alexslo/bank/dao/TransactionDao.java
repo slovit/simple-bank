@@ -4,9 +4,9 @@ import com.alexslo.bank.model.Transaction;
 
 import java.util.List;
 
-public interface TransactionDao  {
+public interface TransactionDao {
 
-    void addTransaction(Transaction transaction);
+    void addTransaction(int accountId, Transaction transaction);
 
     List<Transaction> getAllTransactionsByAccountId(int id);
 }

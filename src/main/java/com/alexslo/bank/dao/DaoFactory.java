@@ -1,23 +1,15 @@
 package com.alexslo.bank.dao;
 
+import com.alexslo.bank.mem.AccountDaoImpl;
 import com.alexslo.bank.mem.TransactionDaoImpl;
+import com.alexslo.bank.mem.UserDaoImpl;
 
-public abstract class DaoFactory {
-    private static DaoFactory daoFactory;
+public interface DaoFactory{
 
-    public abstract UserDao createUserDao();
-    public abstract AccountDao createAccountDao();
-    public abstract TransactionDaoImpl createTransactionDao();
+    public UserDaoImpl createUserDao();
 
-    public static DaoFactory getInstance(){
-        if( daoFactory == null){
-            synchronized (DaoFactory.class){
-                if(daoFactory == null){
-                    DaoFactory temp = new JDBCDaoFactory();
-                    daoFactory = temp;
-                }
-            }
-        }
-        return daoFactory;
-    }
+    public AccountDaoImpl createAccountDao();
+
+    public TransactionDaoImpl createTransactionDao();
+
 }

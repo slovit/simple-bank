@@ -4,23 +4,23 @@ import java.math.BigDecimal;
 
 import java.time.LocalDateTime;
 
-public class Account {
+public abstract class Account {
     private int id;
     private int userId;
     private BigDecimal balance;
     private AccountType accountType;
     private LocalDateTime creationDate;
 
-    public Account(){
+    public Account(){}
 
-    }
-
-    public Account(int userId, int accountID, BigDecimal balance, AccountType accountType, LocalDateTime creationDate) {
+    public Account(int userId, int accountID, LocalDateTime creationDate) {
         this.userId = userId;
         this.id = accountID;
-        this.balance = balance;
-        this.accountType = accountType;
         this.creationDate = creationDate;
+    }
+
+    public void setAccountType(AccountType accountType){
+        this.accountType = accountType;
     }
 
     public int getId() {

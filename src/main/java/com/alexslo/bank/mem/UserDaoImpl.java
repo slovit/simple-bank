@@ -1,82 +1,83 @@
 package com.alexslo.bank.mem;
 
-
+import com.alexslo.bank.model.Exception.NotCorrectPasswordException;
+import com.alexslo.bank.model.Exception.UserDoNotExistException;
 import com.alexslo.bank.model.User;
 import com.alexslo.bank.model.UserRole;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class UserDaoImpl implements com.alexslo.bank.dao.UserDao {
 
-    private final List<User> store = new ArrayList<>();
+    private Map<Integer, User> userMap;
+    private Map<String, User> userLoginMap;
+
 
     public UserDaoImpl() {
-
+        userMap = new HashMap<>();
+        userLoginMap = new HashMap<>();
     }
 
     @Override
-    public boolean addUser(User user) {
-        for (User u : store) {
-            if (u.getUserLogin().equals(user.getUserLogin()) &&
-                    u.getPassword().equals(user.getPassword())) {
-                return false;
-            }
-        }
-        return store.add(user);
+    public void addUser(User user) {
+        userMap.put(user.getUserId(), user);
+        userLoginMap.put(user.getUserLogin(), user);
     }
 
     @Override
     public User getUserById(int id) {
-        User result = new User();
-        result.setuserId(-1);
-
-        for (User user : store) {
-            if (user.getuserId() == id) {
-                result = user;
-            }
-        }
-        return result;
+        return userMap.get(id);
     }
 
     @Override
     public User getUserByLoginPassword(String login, String password) {
-        User result = new User();
-        result.setuserId(-1);
-
-        for (User user : store) {
-            if (user.getUserLogin().equals(login) && user.getPassword().equals(password)) {
-                result = user;
-            }
+        User result = userLoginMap.get(login);
+        if (result.getPassword().equals(password)) {
+            return result;
+        } else {
+            return null;
         }
-        return result;
     }
 
     @Override
-    public UserRole getUserRoleByLoginPassword(String login, String password) {
-        UserRole result = UserRole.GUEST;
-        for (User user : store) {
-            if (user.getUserLogin().equals(login) && user.getPassword().equals(password)) {
-                result = user.getRole();
-            }
-        }
-        return result;
+    public UserRole getUserRoleByLogin(String login) {
+        return userLoginMap.get(login).getRole();
     }
 
     @Override
     public void deleteUserById(int id) {
-
+        userLoginMap.remove(userMap.get(id).getUserLogin());
+        userMap.remove(id);
     }
 
     @Override
-    public boolean userExists(String login, String password) {
-        boolean result = false;
-        for (User user : store) {
-            if (user.getUserLogin().equals(login) && user.getPassword().equals(password)) {
-                result = true;
-                break;
-            }
+    public boolean isPasswordCorrect(String login, String password) throws NotCorrectPasswordException {
+        User fromLogin = userLoginMap.get(login);
+        if (!fromLogin.getPassword().equals(password)) {
+            throw new NotCorrectPasswordException();
+        } else {
+            return true;
         }
-        return result;
+    }
+
+    @Override
+    public boolean userExist(String login) throws UserDoNotExistException {
+        User fromLogin = userLoginMap.get(login);
+        if (fromLogin != null) {
+            return true;
+        } else {
+            throw new UserDoNotExistException();
+        }
+    }
+
+    @Override
+    public boolean userExist(int id) throws UserDoNotExistException {
+        User fromId = userMap.get(id);
+        if (fromId != null) {
+            return true;
+        } else {
+            throw new UserDoNotExistException();
+        }
     }
 }

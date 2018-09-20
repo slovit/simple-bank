@@ -4,18 +4,21 @@ import com.alexslo.bank.model.Account;
 import com.alexslo.bank.model.AccountType;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public interface AccountDao {
 
-    void addAccount(Account account);
+    void addAccount(int userId, Account account);
 
-    Account getAccountByUserId(int id);
+    List<Account> getAccountByUserId(int id);
 
     Account getAccountById(int id);
 
-    BigDecimal getBalanceByAccountId(int id);
+    BigDecimal getBalanceFromAccount(Account account);
 
-    AccountType getAccountTypeById(int id);
+    AccountType getAccountType(Account account);
 
     String getAllAccountInfo(Account account);
+
+    boolean accountExist(int accountId);
 }

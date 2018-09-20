@@ -1,8 +1,8 @@
 package com.alexslo.bank.controller.servlets;
 
 import com.alexslo.bank.mem.UserDaoImpl;
-import com.alexslo.bank.model.entity.Transaction;
-import com.alexslo.bank.model.entity.UserRole;
+import com.alexslo.bank.model.Transaction;
+import com.alexslo.bank.model.UserRole;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -38,29 +38,29 @@ public class AuthServlet extends HttpServlet {
         req.setAttribute("transactions", transactions.values());
         final HttpSession session = req.getSession();
 
-        if (nonNull(session) &&
-                nonNull(session.getAttribute("login")) &&
-                nonNull(session.getAttribute("password"))) {
-
-            final UserRole role = (UserRole) session.getAttribute("role");
-
-            moveToMenu(req, resp, role);
-
-
-        } else if (dao.get().userExists(login, password)) {
-
-            final UserRole role = dao.get().getUserRoleByLoginPassword(login, password);
-
-            req.getSession().setAttribute("password", password);
-            req.getSession().setAttribute("login", login);
-            req.getSession().setAttribute("role", role);
-
-            moveToMenu(req, resp, role);
-
-        } else {
-
-            moveToMenu(req, resp, UserRole.GUEST);
-        }
+//        if (nonNull(session) &&
+//                nonNull(session.getAttribute("login")) &&
+//                nonNull(session.getAttribute("password"))) {
+//
+//            final UserRole role = (UserRole) session.getAttribute("role");
+//
+//            moveToMenu(req, resp, role);
+//
+//
+//        } else if (dao.get().userExist(login)) {
+//
+//            final UserRole role = dao.get().getUserRoleByLoginPassword(login, password);
+//
+//            req.getSession().setAttribute("password", password);
+//            req.getSession().setAttribute("login", login);
+//            req.getSession().setAttribute("role", role);
+//
+//            moveToMenu(req, resp, role);
+//
+//        } else {
+//
+//            moveToMenu(req, resp, UserRole.GUEST);
+//        }
     }
 
     @Override

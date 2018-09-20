@@ -1,25 +1,37 @@
 package com.alexslo.bank.service;
 
-import com.alexslo.bank.model.Account;
 import com.alexslo.bank.model.Transaction;
 import com.alexslo.bank.mem.TransactionDaoImpl;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
+
 public class TransactionService {
 
-    private TransactionDaoImpl transactionDaoImpl = new TransactionDaoImpl();
+    private TransactionDaoImpl transactionDaoImpl;
 
-    public List<Transaction> getTransactionsByAccountId(int accountId){
-        List<Transaction> result;
-        result = transactionDaoImpl.getAllTransactionsByAccountId(accountId);
-        return result;
+    public TransactionService(TransactionDaoImpl transactionDaoImpl){
+        this.transactionDaoImpl = transactionDaoImpl;
+
     }
 
-    public void makeTransaction(int fromAccountId, int toAccountId, double amount){
+    public List<Transaction> getTransactionsByAccountId(int accountId){
+        return transactionDaoImpl.getAllTransactionsByAccountId(accountId);
+    }
+
+    public void makeTransaction(int fromAccountId, int toAccountId, BigDecimal amount){
         LocalDateTime time = LocalDateTime.now();
         Transaction transaction = new Transaction(fromAccountId,toAccountId,amount,time);
-        transactionDaoImpl.addTransaction(transaction);
+        transactionDaoImpl.addTransaction(fromAccountId,transaction);
+        transactionDaoImpl.addTransaction(toAccountId,transaction);
+    }
+
+    public void showAllAccountTransactions(int accountId){
+        List<Transaction> transactions = getTransactionsByAccountId(accountId);
+        for(Transaction transaction: transactions){
+            System.out.println(transaction.toString());
+        }
     }
 }

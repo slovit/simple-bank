@@ -1,68 +1,47 @@
 package com.alexslo.bank.model;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public class Transaction {
-    private int account_id;
+
     private int fromAccount;
     private int toAccountId;
-    private double amount;
+    private BigDecimal amount;
     private LocalDateTime transactionDate;
 
-    public Transaction() {
-    }
-
-    public Transaction(int formAccountId, int toAccountId, double amount, LocalDateTime transactionDate) {
-     //   this.account_id = account_id;
+    public Transaction(int formAccountId, int toAccountId, BigDecimal amount, LocalDateTime transactionDate) {
         this.fromAccount = formAccountId;
         this.toAccountId = toAccountId;
         this.amount = amount;
         this.transactionDate = transactionDate;
     }
 
-    public int getAccount_id() {
-        return account_id;
-    }
-
-    public void setAccount_id(int account_id) {
-        this.account_id = account_id;
-    }
-
     public int getFromAccount() {
         return fromAccount;
-    }
-
-    public void setFromAccount(int fromAccount) {
-        this.fromAccount = fromAccount;
     }
 
     public int getToAccountId() {
         return toAccountId;
     }
 
-    public void setToAccountId(int toAccountId) {
-        this.toAccountId = toAccountId;
-    }
-
-    public double getAmount() {
+    public BigDecimal getAmount() {
         return amount;
-    }
-
-    public void setAmount(double amount) {
-        this.amount = amount;
     }
 
     public LocalDateTime getTransactionDate() {
         return transactionDate;
     }
 
-    public void setTransactionDate(LocalDateTime transactionDate) {
-        this.transactionDate = transactionDate;
-    }
-
     @Override
     public String toString() {
-        return String.format("From account: " + fromAccount + " to account: " + toAccountId
-                + ". Amount: " + amount + "\n");
+//        return String.format("From account: " + fromAccount + " to account: " + toAccountId
+//                + ". Amount: " + amount + "\n");
+        return String.format("Transaction date/time: %tD\nFrom account: %d\nTo account: %d\nAmoount: %f\n\n",
+                transactionDate,
+                fromAccount,
+                toAccountId,
+                amount);
     }
 }
+
