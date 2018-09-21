@@ -1,6 +1,7 @@
-package model.entity;
+package com.alexslo.bank.model;
 
 public class User {
+
     private int userID;
     private String userLogin;
     private String password;
@@ -10,14 +11,14 @@ public class User {
     public User() {
     }
 
-    public User(int userID,String userLogin, String password, UserRole role,String accountId) {
-        this.userID = userID;
+    public User(int userId, String userLogin, String password, UserRole role) {
+        this.userID = userId;
         this.userLogin = userLogin;
         this.password = password;
         this.role = role;
     }
 
-    public int getuserId(){
+    public int getuserId() {
         return userID;
     }
 
@@ -25,7 +26,7 @@ public class User {
         this.userLogin = userLogin;
     }
 
-    public String getPassword(){
+    public String getPassword() {
         return password;
     }
 
@@ -48,5 +49,4 @@ public class User {
     public void setRole(UserRole role) {
         this.role = role;
     }
-
 }

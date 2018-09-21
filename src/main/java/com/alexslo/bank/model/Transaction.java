@@ -1,46 +1,46 @@
-package model.entity;
+package com.alexslo.bank.model;
 
 import java.time.LocalDateTime;
 
 public class Transaction {
-    private int account_id;
-    private String fromAccount;
-    private String toAccountId;
+
+    private int accountId;
+    private int fromAccount;
+    private int toAccountId;
     private double amount;
     private LocalDateTime transactionDate;
 
     public Transaction() {
     }
 
-    public Transaction(String formAccountId, String toAccountId, double amount, LocalDateTime transactionDate) {
-     //   this.account_id = account_id;
+    public Transaction(int formAccountId, int toAccountId, double amount, LocalDateTime transactionDate) {
         this.fromAccount = formAccountId;
         this.toAccountId = toAccountId;
         this.amount = amount;
         this.transactionDate = transactionDate;
     }
 
-    public int getAccount_id() {
-        return account_id;
+    public int getAccountId() {
+        return accountId;
     }
 
-    public void setAccount_id(int account_id) {
-        this.account_id = account_id;
+    public void setAccountId(int accountId) {
+        this.accountId = accountId;
     }
 
-    public String getFromAccount() {
+    public int getFromAccount() {
         return fromAccount;
     }
 
-    public void setFromAccount(String fromAccount) {
+    public void setFromAccount(int fromAccount) {
         this.fromAccount = fromAccount;
     }
 
-    public String getToAccountId() {
+    public int getToAccountId() {
         return toAccountId;
     }
 
-    public void setToAccountId(String toAccountId) {
+    public void setToAccountId(int toAccountId) {
         this.toAccountId = toAccountId;
     }
 
