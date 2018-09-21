@@ -1,4 +1,4 @@
-package com.alexslo.bank.mem;
+package com.alexslo.bank.dao.mem;
 
 import com.alexslo.bank.dao.TransactionDao;
 import com.alexslo.bank.model.Transaction;
@@ -10,19 +10,19 @@ import java.util.Map;
 
 public class TransactionDaoImpl implements TransactionDao {
 
-    private Map<Integer,List<Transaction>> transactionsStorage;
+    private Map<Integer, List<Transaction>> transactionsStorage;
 
-    public TransactionDaoImpl(){
+    public TransactionDaoImpl() {
         transactionsStorage = new HashMap<>();
     }
 
     @Override
     public void addTransaction(int accountId, Transaction transaction) {
         List<Transaction> tempList = transactionsStorage.get(accountId);
-        if(tempList == null){
+        if (tempList == null) {
             tempList = new ArrayList<>();
             tempList.add(transaction);
-            transactionsStorage.put(accountId,tempList);
+            transactionsStorage.put(accountId, tempList);
         } else {
             tempList.add(transaction);
             transactionsStorage.put(accountId, tempList);

@@ -1,8 +1,8 @@
 package com.alexslo.bank.service;
 
-import com.alexslo.bank.mem.TransactionDaoImpl;
+import com.alexslo.bank.dao.mem.TransactionDaoImpl;
 import com.alexslo.bank.model.Account;
-import com.alexslo.bank.mem.AccountDaoImpl;
+import com.alexslo.bank.dao.mem.AccountDaoImpl;
 import com.alexslo.bank.model.Transaction;
 
 import java.math.BigDecimal;
@@ -13,8 +13,8 @@ public class AccountService {
     private AccountDaoImpl accDao;
     private TransactionDaoImpl trDao;
 
-    public AccountService(AccountDaoImpl accDao,TransactionDaoImpl trDao) {
-       this.accDao = accDao;
+    public AccountService(AccountDaoImpl accDao, TransactionDaoImpl trDao) {
+        this.accDao = accDao;
         this.trDao = trDao;
     }
 
@@ -25,8 +25,8 @@ public class AccountService {
             if (isEnoughMoney(account, amount)) {
                 account.setBalance(account.getBalance().add(amount));
                 LocalDateTime dateTime = LocalDateTime.now();
-                Transaction transaction = new Transaction(accountId,accountId,amount,dateTime);
-                trDao.addTransaction(accountId,transaction);
+                Transaction transaction = new Transaction(accountId, accountId, amount, dateTime);
+                trDao.addTransaction(accountId, transaction);
                 result = true;
             }
         }
@@ -40,8 +40,8 @@ public class AccountService {
             if (isEnoughMoney(account, amount)) {
                 account.setBalance(account.getBalance().subtract(amount));
                 LocalDateTime dateTime = LocalDateTime.now();
-                Transaction transaction = new Transaction(accountId,accountId,amount,dateTime);
-                trDao.addTransaction(accountId,transaction);
+                Transaction transaction = new Transaction(accountId, accountId, amount, dateTime);
+                trDao.addTransaction(accountId, transaction);
                 result = true;
             }
         }
@@ -57,9 +57,9 @@ public class AccountService {
                 fromAccount.setBalance(fromAccount.getBalance().subtract(amount));
                 toAccount.setBalance(toAccount.getBalance().add(amount));
                 LocalDateTime dateTime = LocalDateTime.now();
-                Transaction transaction = new Transaction(fromAccountId,toAccountId,amount,dateTime);
-                trDao.addTransaction(fromAccountId,transaction);
-                trDao.addTransaction(toAccountId,transaction);
+                Transaction transaction = new Transaction(fromAccountId, toAccountId, amount, dateTime);
+                trDao.addTransaction(fromAccountId, transaction);
+                trDao.addTransaction(toAccountId, transaction);
                 result = true;
             }
         }

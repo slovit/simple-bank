@@ -1,6 +1,6 @@
 package com.alexslo.bank.service;
 
-import com.alexslo.bank.mem.UserDaoImpl;
+import com.alexslo.bank.dao.mem.UserDaoImpl;
 import com.alexslo.bank.model.Exception.NotCorrectPasswordException;
 import com.alexslo.bank.model.Exception.UserDoNotExistException;
 import com.alexslo.bank.model.User;

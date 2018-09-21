@@ -2,7 +2,6 @@ package com.alexslo.bank.dao;
 
 import com.alexslo.bank.model.Account;
 import com.alexslo.bank.model.AccountType;
-
 import java.math.BigDecimal;
 import java.util.List;
 

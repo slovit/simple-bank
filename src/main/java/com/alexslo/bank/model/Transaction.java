@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public class Transaction {
-
     private int fromAccount;
     private int toAccountId;
     private BigDecimal amount;
@@ -44,4 +43,3 @@ public class Transaction {
                 amount);
     }
 }
-

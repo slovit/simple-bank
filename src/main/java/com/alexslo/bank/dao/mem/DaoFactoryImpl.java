@@ -1,4 +1,4 @@
-package com.alexslo.bank.mem;
+package com.alexslo.bank.dao.mem;
 
 import com.alexslo.bank.dao.DaoFactory;
 

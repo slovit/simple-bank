@@ -1,4 +1,4 @@
-package com.alexslo.bank.mem;
+package com.alexslo.bank.dao.mem;
 
 import com.alexslo.bank.dao.AccountDao;
 import com.alexslo.bank.model.Account;
@@ -9,14 +9,13 @@ import java.util.*;
 
 
 public class AccountDaoImpl implements AccountDao {
-
     private Map<Integer,List<Account>> userAccounts;
     private Map<Integer,Account> accountWarehouse;
 
 
     public AccountDaoImpl(){
-       userAccounts = new HashMap<>();
-       accountWarehouse = new HashMap<>();
+        userAccounts = new HashMap<>();
+        accountWarehouse = new HashMap<>();
     }
 
     @Override

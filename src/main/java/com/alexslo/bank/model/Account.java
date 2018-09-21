@@ -1,10 +1,10 @@
 package com.alexslo.bank.model;
 
 import java.math.BigDecimal;
-
 import java.time.LocalDateTime;
 
 public abstract class Account {
+
     private int id;
     private int userId;
     private BigDecimal balance;

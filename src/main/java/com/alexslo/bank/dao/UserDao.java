@@ -24,3 +24,4 @@ public interface UserDao {
     boolean isPasswordCorrect(String login, String password) throws NotCorrectPasswordException;
 
 }
+
