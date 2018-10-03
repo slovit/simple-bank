@@ -7,30 +7,40 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Collections;
+
 
 public class TransactionDaoImpl implements TransactionDao {
 
-    private Map<Integer, List<Transaction>> transactionsStorage;
+    private Map<Integer, List<Transaction>> transactionsByAccountId;
 
     public TransactionDaoImpl() {
-        transactionsStorage = new HashMap<>();
+        transactionsByAccountId = new HashMap<>();
     }
 
     @Override
     public void addTransaction(int accountId, Transaction transaction) {
-        List<Transaction> tempList = transactionsStorage.get(accountId);
-        if (tempList == null) {
-            tempList = new ArrayList<>();
-            tempList.add(transaction);
-            transactionsStorage.put(accountId, tempList);
-        } else {
-            tempList.add(transaction);
-            transactionsStorage.put(accountId, tempList);
+        if (accountId <= 0 || transaction == null) {
+            throw new IllegalArgumentException("incorrect accountId or Transaction equals null!");
         }
+        List<Transaction> transactions = transactionsByAccountId.get(accountId);
+        if (transactions == null) {
+            transactions = new ArrayList<>();
+        }
+        transactions.add(transaction);
+        transactionsByAccountId.put(accountId, transactions);
+
     }
 
     @Override
-    public List<Transaction> getAllTransactionsByAccountId(int accountId) {
-        return transactionsStorage.get(accountId);
+    public List<Transaction> getTransactionsByAccountId(int accountId) {
+        if (accountId <= 0) {
+            throw new IllegalArgumentException("Incorrect accountId!");
+        }
+        List<Transaction> transactions = transactionsByAccountId.get(accountId);
+        if (transactions == null) {
+            return Collections.emptyList();
+        }
+        return transactions;
     }
 }

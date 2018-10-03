@@ -7,11 +7,7 @@
     <!--filter check exist session for sign in-->
     <servlet>
         <servlet-name>AuthServlet</servlet-name>
-<<<<<<< HEAD
-        <servlet-class>com.alexslo.bank.controller.servlets.AuthServlet</servlet-class>
-=======
         <servlet-class>com.alexslo.bank.controller.AuthServlet</servlet-class>
->>>>>>> 6e4c080b6f72f46c9052445a73eddc18f8d94ce0
     </servlet>
     <servlet-mapping>
         <servlet-name>AuthServlet</servlet-name>
@@ -20,25 +16,12 @@
     <!--Logout servlet-->
     <servlet>
         <servlet-name>LogoutServlet</servlet-name>
-<<<<<<< HEAD
-        <servlet-class>com.alexslo.bank.controller.servlets.LogoutServlet</servlet-class>
-=======
         <servlet-class>com.alexslo.bank.controller.LogoutServlet</servlet-class>
->>>>>>> 6e4c080b6f72f46c9052445a73eddc18f8d94ce0
     </servlet>
 
     <servlet-mapping>
         <servlet-name>LogoutServlet</servlet-name>
         <url-pattern>/logout</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>TransactionServlet</servlet-name>
-        <servlet-class>com.alexslo.bank.controller.servlets.TransactionServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>TransactionServlet</servlet-name>
-        <url-pattern>/transaction</url-pattern>
     </servlet-mapping>
 
 </web-app>

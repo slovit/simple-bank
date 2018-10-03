@@ -1,15 +1,11 @@
 package com.alexslo.bank.dao;
 
-import com.alexslo.bank.dao.mem.AccountDaoImpl;
-import com.alexslo.bank.dao.mem.TransactionDaoImpl;
-import com.alexslo.bank.dao.mem.UserDaoImpl;
+public interface DaoFactory {
 
-public interface DaoFactory{
+    public UserDao createUserDao();
 
-    public UserDaoImpl createUserDao();
+    public AccountDao createAccountDao();
 
-    public AccountDaoImpl createAccountDao();
-
-    public TransactionDaoImpl createTransactionDao();
+    public TransactionDao createTransactionDao();
 
 }

@@ -8,19 +8,13 @@ public abstract class Account {
     private int id;
     private int userId;
     private BigDecimal balance;
-    private AccountType accountType;
     private LocalDateTime creationDate;
 
-    public Account(){}
-
-    public Account(int userId, int accountID, LocalDateTime creationDate) {
+    protected Account(int userId, int accountID) {
         this.userId = userId;
         this.id = accountID;
-        this.creationDate = creationDate;
-    }
-
-    public void setAccountType(AccountType accountType){
-        this.accountType = accountType;
+        this.creationDate = LocalDateTime.now();
+        this.balance = BigDecimal.ZERO;
     }
 
     public int getId() {
@@ -35,23 +29,19 @@ public abstract class Account {
         this.balance = balance;
     }
 
-    public AccountType getAccountType() {
-        return accountType;
-    }
-
     public LocalDateTime getCreationDate() {
-        return creationDate.withNano(0);
+        return creationDate;
     }
 
-    public void getSubstractBalance(BigDecimal amount){
+    public void subtractBalance(BigDecimal amount) {
         this.balance = balance.subtract(amount);
     }
 
-    public void addToBalance(BigDecimal amount){
+    public void addToBalance(BigDecimal amount) {
         this.balance = balance.add(amount);
     }
 
-    public int getUserId(){
+    public int getUserId() {
         return userId;
     }
 }

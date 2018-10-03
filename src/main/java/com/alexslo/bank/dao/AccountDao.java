@@ -1,23 +1,39 @@
 package com.alexslo.bank.dao;
 
 import com.alexslo.bank.model.Account;
-import com.alexslo.bank.model.AccountType;
-import java.math.BigDecimal;
+
 import java.util.List;
 
 public interface AccountDao {
-
+    /**
+     * Add Account by userId into database
+     *
+     * @param userId
+     * @param account
+     */
     void addAccount(int userId, Account account);
 
-    List<Account> getAccountByUserId(int id);
+    /**
+     * Return all accounts that user have as List
+     *
+     * @param userId
+     * @return
+     */
+    List<Account> getAccountsByUserId(int userId);
 
-    Account getAccountById(int id);
+    /**
+     * Return account by its id
+     *
+     * @param accountId
+     * @return
+     */
+    Account getAccountById(int accountId);
 
-    BigDecimal getBalanceFromAccount(Account account);
-
-    AccountType getAccountType(Account account);
-
-    String getAllAccountInfo(Account account);
-
-    boolean accountExist(int accountId);
+    /**
+     * Checks if account exists
+     *
+     * @param accountId
+     * @return true/false
+     */
+    boolean isAccountExist(int accountId);
 }
