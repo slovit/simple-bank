@@ -3,7 +3,6 @@ package com.alexslo.bank.model;
 import java.math.BigDecimal;
 
 public class CreditAccount extends Account {
-
     private BigDecimal creditLimit;
 
     public CreditAccount(int userId, int accountId) {

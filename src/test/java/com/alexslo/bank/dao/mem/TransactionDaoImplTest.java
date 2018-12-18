@@ -13,6 +13,7 @@ import java.util.Random;
 public class TransactionDaoImplTest {
     private TransactionDao transactionDao;
     private Random random;
+
     @Before
     public void init() {
         transactionDao = new TransactionDaoImpl();
@@ -23,7 +24,7 @@ public class TransactionDaoImplTest {
     public void addTransactionTest() {
         int fromAcountId = Math.abs(random.nextInt());
         int toAccountId = Math.abs(random.nextInt());
-        Transaction transaction = new Transaction(fromAcountId, toAccountId, BigDecimal.valueOf(100));
+        Transaction transaction = new Transaction(fromAcountId, toAccountId, BigDecimal.valueOf(100), BigDecimal.ZERO);
         transactionDao.addTransaction(fromAcountId, transaction);
         List<Transaction> transactions = transactionDao.getTransactionsByAccountId(fromAcountId);
         Assert.assertEquals(1, transactions.size());
@@ -34,7 +35,7 @@ public class TransactionDaoImplTest {
     public void addTransactionIncorrectAccountIdTest() {
         int fromaAcountId = Math.abs(random.nextInt());
         int toAccountId = Math.abs(random.nextInt());
-        Transaction transaction = new Transaction(fromaAcountId, toAccountId, BigDecimal.valueOf(100));
+        Transaction transaction = new Transaction(fromaAcountId, toAccountId, BigDecimal.valueOf(100), BigDecimal.ZERO);
         transactionDao.addTransaction(-1, transaction);
     }
 
@@ -52,8 +53,8 @@ public class TransactionDaoImplTest {
     public void getTransactionsByAccountIdTest() {
         int fromaAcountId = Math.abs(random.nextInt());
         int toAccountId = Math.abs(random.nextInt());
-        Transaction transaction1 = new Transaction(fromaAcountId, toAccountId, BigDecimal.valueOf(100));
-        Transaction transaction2 = new Transaction(toAccountId, fromaAcountId, BigDecimal.valueOf(100));
+        Transaction transaction1 = new Transaction(fromaAcountId, toAccountId, BigDecimal.valueOf(100), BigDecimal.ZERO);
+        Transaction transaction2 = new Transaction(toAccountId, fromaAcountId, BigDecimal.valueOf(100), BigDecimal.ZERO);
         transactionDao.addTransaction(fromaAcountId, transaction1);
         transactionDao.addTransaction(fromaAcountId, transaction2);
         List<Transaction> transactions = transactionDao.getTransactionsByAccountId(fromaAcountId);

@@ -8,14 +8,6 @@ import java.time.LocalDateTime;
 public class SavingAccountTest {
 
     @Test
-    public void setAndGetDepositExpireDateTest() {
-        SavingAccount savingAccount = new SavingAccount(2, 3, 20.0);
-        LocalDateTime dateTime = LocalDateTime.now();
-        savingAccount.setDepositExpireDate(dateTime);
-        Assert.assertEquals(dateTime, savingAccount.getDepositExpireDate());
-    }
-
-    @Test
     public void setAndGetInterestRate() {
         SavingAccount savingAccount = new SavingAccount(2, 3, 20.0);
         double interestRate = 30.0;
