@@ -10,39 +10,13 @@ public abstract class Account {
     private BigDecimal balance;
     private LocalDateTime creationDate;
     private BigDecimal creditInterest;
-    private double interestRate;
+
 
     protected Account(int userId, int accountID) {
         this.userId = userId;
         this.id = accountID;
         this.creationDate = LocalDateTime.now();
         this.balance = BigDecimal.ZERO;
-        this.creditInterest = BigDecimal.ZERO;
-        this.interestRate = 0.0;
-    }
-
-    public void setCreditInterest(BigDecimal creditInterest){
-        this.creditInterest = creditInterest;
-    }
-
-    public void setInterestRate(double interestRate){
-        this.interestRate = interestRate;
-    }
-
-    public BigDecimal getCreditInterest(){
-        return creditInterest;
-    }
-
-    public double getInterestRate(){
-        return interestRate;
-    }
-
-    public double getMonthlyInterest(){
-        return interestRate/12;
-    }
-
-    public double getDailyInterest(){
-        return interestRate/365;
     }
 
     public int getId() {

@@ -1,10 +1,18 @@
 package com.alexslo.bank.model;
 
 public class SavingAccount extends Account {
+    private double interestRate;
 
-    public SavingAccount(int userId, int accountId, double interestRate) {
+    public SavingAccount(int userId, int accountId) {
         super(userId, accountId);
-        super.setInterestRate(interestRate);
+    }
+
+    public void setInterestRate(double interestRate) {
+        this.interestRate = interestRate;
+    }
+
+    public double getInterestRate() {
+        return interestRate;
     }
 
     @Override

@@ -12,7 +12,7 @@ public class TransactionTest {
 
     @Before
     public void init() {
-        transaction = new Transaction(1, 2, BigDecimal.TEN, BigDecimal.ZERO);
+        transaction = new Transaction(1, 2, BigDecimal.TEN);
     }
 
     @Test

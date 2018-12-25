@@ -30,7 +30,7 @@ public class AccountDaoImplTest {
     public void addSingleAccountTest() {
         int userId = Math.abs(random.nextInt());
         int accountId = Math.abs(random.nextInt());
-        SavingAccount savingAccount = new SavingAccount(userId, accountId, 20.0);
+        SavingAccount savingAccount = new SavingAccount(userId, accountId);
         accountDao.addAccount(userId, savingAccount);
         List<Account> userAccounts = accountDao.getAccountsByUserId(userId);
         Assert.assertEquals(1, userAccounts.size());
@@ -57,7 +57,7 @@ public class AccountDaoImplTest {
 
     @Test
     public void getAccountByIdThatDoesntExistTest() {
-        accountDao.addAccount(1, new SavingAccount(1, 2, 30));
+        accountDao.addAccount(1, new SavingAccount(1, 2));
         Account account = accountDao.getAccountById(3);
         assertNull(account);
     }
@@ -66,7 +66,7 @@ public class AccountDaoImplTest {
     public void getAccountByIdTest() {
         int userId = Math.abs(random.nextInt());
         int accountId = Math.abs(random.nextInt());
-        SavingAccount savingAccount = new SavingAccount(userId, accountId, 20.0);
+        SavingAccount savingAccount = new SavingAccount(userId, accountId);
         accountDao.addAccount(userId, savingAccount);
         Assert.assertEquals(savingAccount, accountDao.getAccountById(accountId));
     }
@@ -83,7 +83,7 @@ public class AccountDaoImplTest {
         int creditAcId = Math.abs(random.nextInt());
         int savingAcId = Math.abs(random.nextInt());
         CreditAccount creditAccount = new CreditAccount(userId, creditAcId);
-        SavingAccount savingAccount = new SavingAccount(userId, savingAcId, 30.0);
+        SavingAccount savingAccount = new SavingAccount(userId, savingAcId);
         accountDao.addAccount(userId, creditAccount);
         accountDao.addAccount(userId, savingAccount);
         List<Account> accounts = accountDao.getAccountsByUserId(userId);

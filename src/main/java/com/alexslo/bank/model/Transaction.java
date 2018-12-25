@@ -7,14 +7,12 @@ public class Transaction {
     private int fromAccountId;
     private int toAccountId;
     private BigDecimal amount;
-    private BigDecimal accountBalance;
     private LocalDateTime transactionDate;
 
-    public Transaction(int formAccountId, int toAccountId, BigDecimal amount, BigDecimal accountBalance) {
+    public Transaction(int formAccountId, int toAccountId, BigDecimal amount) {
         this.fromAccountId = formAccountId;
         this.toAccountId = toAccountId;
         this.amount = amount;
-        this.accountBalance = accountBalance;
         this.transactionDate = LocalDateTime.now();
     }
 
@@ -30,15 +28,11 @@ public class Transaction {
         return amount;
     }
 
-    public BigDecimal getAccountBalance(){
-        return accountBalance;
-    }
-
     public LocalDateTime getTransactionDate() {
         return transactionDate;
     }
 
-    public void setTransactionDate(LocalDateTime localDateTime){
+    public void setTransactionDate(LocalDateTime localDateTime) {
         this.transactionDate = localDateTime;
     }
 
