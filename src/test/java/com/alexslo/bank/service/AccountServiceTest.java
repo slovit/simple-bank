@@ -64,7 +64,7 @@ public class AccountServiceTest {
         int userId = Math.abs(random.nextInt());
         int savingAcId = Math.abs(random.nextInt());
         int creditAcId = Math.abs(random.nextInt());
-        SavingAccount savingAccount = new SavingAccount(userId, savingAcId);
+        SavingAccount savingAccount = new SavingAccount(userId, savingAcId, 20);
         CreditAccount creditAccount = new CreditAccount(userId, creditAcId);
         accountDao.addAccount(userId, savingAccount);
         accountDao.addAccount(userId, creditAccount);
@@ -88,7 +88,7 @@ public class AccountServiceTest {
     public void withdrawFromSavingAccountTest() {
         int userId = Math.abs(random.nextInt());
         int savingAcId = Math.abs(random.nextInt());
-        SavingAccount savingAccount = new SavingAccount(userId, savingAcId);
+        SavingAccount savingAccount = new SavingAccount(userId, savingAcId, 20);
         savingAccount.addToBalance(BigDecimal.valueOf(500));
         accountDao.addAccount(userId, savingAccount);
         accountService.withdraw(savingAcId, 0, BigDecimal.valueOf(300));
@@ -99,7 +99,7 @@ public class AccountServiceTest {
     public void withdrawFromSavingAccountWithNoMoneyTest() {
         int userId = Math.abs(random.nextInt());
         int savingAcId = Math.abs(random.nextInt());
-        SavingAccount savingAccount = new SavingAccount(userId, savingAcId);
+        SavingAccount savingAccount = new SavingAccount(userId, savingAcId, 20);
         accountDao.addAccount(userId, savingAccount);
         accountService.withdraw(savingAcId, 0, BigDecimal.valueOf(300));
     }
@@ -108,7 +108,7 @@ public class AccountServiceTest {
     public void withdrawFromSavingAccountDifferentAmountTest() {
         int userId = Math.abs(random.nextInt());
         int savingAcId = Math.abs(random.nextInt());
-        SavingAccount savingAccount = new SavingAccount(userId, savingAcId);
+        SavingAccount savingAccount = new SavingAccount(userId, savingAcId, 20);
         savingAccount.setBalance(BigDecimal.TEN);
         accountDao.addAccount(userId, savingAccount);
         accountService.withdraw(savingAcId, 0, BigDecimal.valueOf(7));
@@ -144,7 +144,7 @@ public class AccountServiceTest {
         int savingAcId = Math.abs(random.nextInt());
         CreditAccount creditAccount = new CreditAccount(userId, creditAcId);
         creditAccount.setCreditLimit(BigDecimal.valueOf(-2000));
-        SavingAccount savingAccount = new SavingAccount(userId, savingAcId);
+        SavingAccount savingAccount = new SavingAccount(userId, savingAcId, 20);
         accountDao.addAccount(userId, creditAccount);
         accountDao.addAccount(userId, savingAccount);
         accountService.transferFromToAccount(creditAcId, savingAcId, BigDecimal.valueOf(1500));

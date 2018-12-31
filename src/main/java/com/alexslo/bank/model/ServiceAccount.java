@@ -2,9 +2,17 @@ package com.alexslo.bank.model;
 
 public class ServiceAccount {
     private int accountId;
+    private Enum accountServiceType;
 
-    public ServiceAccount (){
-        this.accountId = 0;
+    public ServiceAccount() {
+    }
+
+    public Enum getAccountServiceType() {
+        return accountServiceType;
+    }
+
+    public void setAccountServiceType(Enum accoutServiceType) {
+        this.accountServiceType = accoutServiceType;
     }
 
     public int getAccountId() {

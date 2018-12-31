@@ -17,15 +17,15 @@ public class AccountService {
     private TransactionDao transactionDao;
 
     public AccountService(AccountDao accDao, TransactionDao trDao) {
-        this.accountDao = accDao;
-        this.transactionDao = trDao;
+        accountDao = accDao;
+        transactionDao = trDao;
     }
 
     public SavingAccount createSavingAccount(int userId, int accountId, double interestRate) {
         if (userId <= 0 || accountId <= 0 || interestRate <= 0) {
             throw new IllegalArgumentException("Incorrect userId or negative interestRate!");
         }
-        SavingAccount savingAccount = new SavingAccount(userId, accountId);
+        SavingAccount savingAccount = new SavingAccount(userId, accountId, interestRate);
         accountDao.addAccount(userId, savingAccount);
         return savingAccount;
     }
