@@ -4,15 +4,17 @@ public class ServiceAccount {
     private int accountId;
     private Enum accountServiceType;
 
-    public ServiceAccount() {
+    public ServiceAccount(int accountId, Enum accountType) {
+        this.accountId = accountId;
+        this.accountServiceType = accountType;
     }
 
     public Enum getAccountServiceType() {
         return accountServiceType;
     }
 
-    public void setAccountServiceType(Enum accoutServiceType) {
-        this.accountServiceType = accoutServiceType;
+    public void setAccountServiceType(Enum accountServiceType) {
+        this.accountServiceType = accountServiceType;
     }
 
     public int getAccountId() {

@@ -9,6 +9,7 @@ import static junit.framework.TestCase.assertEquals;
 
 import com.alexslo.bank.model.Transaction;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,7 +21,10 @@ import org.mockito.runners.MockitoJUnitRunner;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+
+import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.anyInt;
@@ -56,10 +60,17 @@ public class InterestCalculationServiceTest {
 
     @Test
     public void getAccountBalanceAtMonthEndTest() {
-        setGetTransactionsByAccIdBehaviour();
-        BigDecimal accountBalance = interestService.getAccountBalanceAtMonthEnd(savingAccount, MONTH);
+        setGetSortedTransactionsBehaviour();
+        BigDecimal accountBalance = interestService.getAccountBalanceAtMonthEnd(savingAccount, 12);
         assertNotNull(accountBalance);
         assertEquals(BigDecimal.valueOf(600), accountBalance);
+    }
+
+    @Test
+    public void getAccountBalanceAtMonthEndZeroTransactionsTest() {
+        BigDecimal accountBalance = interestService.getAccountBalanceAtMonthEnd(savingAccount, 12);
+        assertNotNull(accountBalance);
+        assertEquals(BigDecimal.ZERO, accountBalance);
     }
 
     @Test
@@ -68,9 +79,9 @@ public class InterestCalculationServiceTest {
         Transaction subtractBalanceTransaction = transactions.get(5);
         BigDecimal accountBalance = BigDecimal.valueOf(500);
         assertEquals(BigDecimal.valueOf(400),
-                interestService.calcTransactionBalance(addBalanceTransaction, 1, accountBalance));
+                interestService.calcBalanceBeforeTransaction(addBalanceTransaction, 1, accountBalance));
         assertEquals(BigDecimal.valueOf(600),
-                interestService.calcTransactionBalance(subtractBalanceTransaction, 1, accountBalance));
+                interestService.calcBalanceBeforeTransaction(subtractBalanceTransaction, 1, accountBalance));
     }
 
     @Test
@@ -80,22 +91,27 @@ public class InterestCalculationServiceTest {
 
     @Test
     public void getBalancesOverPeriodsTest() {
-        setGetTransactionsByAccIdBehaviour();
-        List<Transaction> transactions = interestService.getAccountTransactionsForMonth(savingAccount, MONTH);
-        BigDecimal accBalance = interestService.getAccountBalanceAtMonthEnd(savingAccount, MONTH);
-        List<BalanceOverPeriod> balances = interestService.getBalancesOverPeriods(transactions, 1, accBalance);
-        int days = 0;
-        for (BalanceOverPeriod balanceOverPeriod : balances) {
-            days += balanceOverPeriod.getDays();
-        }
+        List<Transaction> monthTransactions = transactions;
+        monthTransactions.remove(0);
+        monthTransactions.remove(transactions.size() - 1);
+        BigDecimal accBalance = BigDecimal.valueOf(600);
+        List<BalanceOverPeriod> balances = interestService.getBalancesOverPeriods(monthTransactions, 1, accBalance);
         assertNotNull(balances);
-        assertEquals(7, balances.size());
-        assertEquals(31, days);
+        Assert.assertThat(balances,
+                containsInAnyOrder(new BalanceOverPeriod(BigDecimal.valueOf(500), 2),
+                        new BalanceOverPeriod(BigDecimal.valueOf(400), 11),
+                        new BalanceOverPeriod(BigDecimal.valueOf(500), 8),
+                        new BalanceOverPeriod(BigDecimal.valueOf(400), 1),
+                        new BalanceOverPeriod(BigDecimal.valueOf(300), 7),
+                        new BalanceOverPeriod(BigDecimal.valueOf(200), 0),
+                        new BalanceOverPeriod(BigDecimal.valueOf(100), 2)
+                ));
     }
 
     @Test
     public void calcInterestTest() {
         setGetTransactionsByAccIdBehaviour();
+        setGetSortedTransactionsBehaviour();
         List<Transaction> transactions = interestService.getAccountTransactionsForMonth(savingAccount, MONTH);
         BigDecimal accBalance = interestService.getAccountBalanceAtMonthEnd(savingAccount, MONTH);
         List<BalanceOverPeriod> balances = interestService.getBalancesOverPeriods(transactions, 1, accBalance);
@@ -107,6 +123,7 @@ public class InterestCalculationServiceTest {
     @Test
     public void calcSavingAccountInterestTest() {
         setGetTransactionsByAccIdBehaviour();
+        setGetSortedTransactionsBehaviour();
         BigDecimal balance = interestService.calcSavingAccountInterest(savingAccount, MONTH);
         assertEquals(BigDecimal.valueOf(121.0), balance);
     }
@@ -114,6 +131,7 @@ public class InterestCalculationServiceTest {
     @Test
     public void addInterestToBalanceTest() {
         setGetTransactionsByAccIdBehaviour();
+        setGetSortedTransactionsBehaviour();
         interestService.addInterestToBalance(savingAccount, MONTH);
         assertEquals(BigDecimal.valueOf(821.0), savingAccount.getBalance());
         verify(transactionDaoMock, times(1)).addTransaction(anyInt(), any(Transaction.class));
@@ -149,20 +167,16 @@ public class InterestCalculationServiceTest {
         interestService.getAccountTransactionsForMonth(savingAccount, 13);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void getBalancesOverPeriodsEmptyTransactionListTest() {
         List<Transaction> transactions = new ArrayList<>();
-        interestService.getBalancesOverPeriods(transactions, 1, BigDecimal.TEN);
+        List<BalanceOverPeriod> list = interestService.getBalancesOverPeriods(transactions, 1, BigDecimal.TEN);
+        assertEquals(list, Collections.emptyList());
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void getBalancesOverPeriodsIncorrectAccountIdTest() {
         interestService.getBalancesOverPeriods(transactions, -1, BigDecimal.TEN);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void getBalancesOverPeriodsZeroBalanceArgumentTest() {
-        interestService.getBalancesOverPeriods(transactions, 1, BigDecimal.ZERO);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -183,11 +197,17 @@ public class InterestCalculationServiceTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void calcTransactionBalanceIncorrectArgumentsTest() {
-        interestService.calcTransactionBalance(null, -2, BigDecimal.ZERO);
+        interestService.calcBalanceBeforeTransaction(null, -2, BigDecimal.ZERO);
     }
 
     private void setGetTransactionsByAccIdBehaviour() {
         when(transactionDaoMock.getTransactionsByAccountId(1)).thenReturn(transactions);
+    }
+
+    private void setGetSortedTransactionsBehaviour() {
+        List<Transaction> sortedTr = transactions;
+        sortedTr.remove(0);
+        when(transactionDaoMock.getTransactionsOlderThan(anyInt(), anyInt())).thenReturn(transactions);
     }
 
     private void initData() {

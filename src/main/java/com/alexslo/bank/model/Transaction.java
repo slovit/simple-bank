@@ -3,7 +3,7 @@ package com.alexslo.bank.model;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-public class Transaction {
+public class Transaction implements Comparable<Transaction> {
     private int fromAccountId;
     private int toAccountId;
     private BigDecimal amount;
@@ -43,5 +43,10 @@ public class Transaction {
                 fromAccountId,
                 toAccountId,
                 amount);
+    }
+
+    @Override
+    public int compareTo(Transaction o) {
+        return this.getTransactionDate().compareTo(o.getTransactionDate());
     }
 }

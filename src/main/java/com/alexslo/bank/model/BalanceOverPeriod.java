@@ -18,4 +18,14 @@ public class BalanceOverPeriod {
     public int getDays() {
         return days;
     }
+
+    @Override
+    public boolean equals(Object object) {
+        if (object == null) return false;
+        if (object == this) return true;
+        if (!(object instanceof BalanceOverPeriod)) return false;
+        BalanceOverPeriod balanceOverPeriod = (BalanceOverPeriod) object;
+        return this.getDays() == balanceOverPeriod.getDays() && this.getBalance().equals(balanceOverPeriod
+                .getBalance());
+    }
 }

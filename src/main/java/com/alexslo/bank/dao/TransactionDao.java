@@ -21,4 +21,10 @@ public interface TransactionDao {
      * @return
      */
     List<Transaction> getTransactionsByAccountId(int id);
+
+    List<Transaction> getTransactionsOlderThan(int accountId, int month);
+
+    List<Transaction> getSortedTransactions(int accountId);
+
+    List<Transaction> getAccountTransactionsForMonth(int accountId, int month);
 }

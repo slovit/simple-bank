@@ -4,10 +4,7 @@ import com.alexslo.bank.dao.AccountDao;
 import com.alexslo.bank.dao.TransactionDao;
 import com.alexslo.bank.exception.AccountDoNotExistException;
 import com.alexslo.bank.exception.NotEnoughMoneyException;
-import com.alexslo.bank.model.Account;
-import com.alexslo.bank.model.CreditAccount;
-import com.alexslo.bank.model.SavingAccount;
-import com.alexslo.bank.model.Transaction;
+import com.alexslo.bank.model.*;
 
 import java.math.BigDecimal;
 
@@ -15,10 +12,18 @@ public class AccountService {
 
     private AccountDao accountDao;
     private TransactionDao transactionDao;
+    public static final ServiceAccount ATM = new ServiceAccount(getNextAccountId(), ServiceAccountType.ATM);
+    static final ServiceAccount SAVING_INTEREST = new ServiceAccount(getNextAccountId(), ServiceAccountType.SAVING_INTEREST);
+    private static int accountIdCounter;
 
     public AccountService(AccountDao accDao, TransactionDao trDao) {
         accountDao = accDao;
         transactionDao = trDao;
+        accountIdCounter = 1;
+    }
+
+    public static int getNextAccountId() {
+        return accountIdCounter++;
     }
 
     public SavingAccount createSavingAccount(int userId, int accountId, double interestRate) {
