@@ -36,6 +36,7 @@ public class InterestCalculationServiceTest {
 
     private SavingAccount savingAccount;
     private List<Transaction> transactions;
+    private List<Transaction> monthTransactions;
     private final int MONTH = 12;
 
     @Mock
@@ -112,7 +113,8 @@ public class InterestCalculationServiceTest {
     public void calcInterestTest() {
         setGetTransactionsByAccIdBehaviour();
         setGetSortedTransactionsBehaviour();
-        List<Transaction> transactions = interestService.getAccountTransactionsForMonth(savingAccount, MONTH);
+        setGetTransactionsForMonthBehaviour();
+        List<Transaction> transactions = transactionDaoMock.getAccountTransactionsForMonth(1, MONTH);
         BigDecimal accBalance = interestService.getAccountBalanceAtMonthEnd(savingAccount, MONTH);
         List<BalanceOverPeriod> balances = interestService.getBalancesOverPeriods(transactions, 1, accBalance);
         BigDecimal calculatedInterest = interestService.calcInterest(1.0, balances);
@@ -124,6 +126,7 @@ public class InterestCalculationServiceTest {
     public void calcSavingAccountInterestTest() {
         setGetTransactionsByAccIdBehaviour();
         setGetSortedTransactionsBehaviour();
+        setGetTransactionsForMonthBehaviour();
         BigDecimal balance = interestService.calcSavingAccountInterest(savingAccount, MONTH);
         assertEquals(BigDecimal.valueOf(121.0), balance);
     }
@@ -132,6 +135,7 @@ public class InterestCalculationServiceTest {
     public void addInterestToBalanceTest() {
         setGetTransactionsByAccIdBehaviour();
         setGetSortedTransactionsBehaviour();
+        setGetTransactionsForMonthBehaviour();
         interestService.addInterestToBalance(savingAccount, MONTH);
         assertEquals(BigDecimal.valueOf(821.0), savingAccount.getBalance());
         verify(transactionDaoMock, times(1)).addTransaction(anyInt(), any(Transaction.class));
@@ -207,7 +211,11 @@ public class InterestCalculationServiceTest {
     private void setGetSortedTransactionsBehaviour() {
         List<Transaction> sortedTr = transactions;
         sortedTr.remove(0);
-        when(transactionDaoMock.getTransactionsOlderThan(anyInt(), anyInt())).thenReturn(transactions);
+        when(transactionDaoMock.getTransactionsOlderThan(anyInt(), anyInt())).thenReturn(sortedTr);
+    }
+
+    private void setGetTransactionsForMonthBehaviour() {
+        when(transactionDaoMock.getAccountTransactionsForMonth(anyInt(), anyInt())).thenReturn(monthTransactions);
     }
 
     private void initData() {
@@ -229,6 +237,7 @@ public class InterestCalculationServiceTest {
         int anotherId = 3;
         int numberOfDaysInYear = 365;
         transactions = new ArrayList<>();
+        monthTransactions = new ArrayList<>();
         savingAccount = new SavingAccount(userId, accountId, numberOfDaysInYear);
         savingAccount.setBalance(BigDecimal.valueOf(700));
         LocalDateTime time24_11 = LocalDateTime.of(2018, 11, 24, 13, 13);
@@ -266,5 +275,12 @@ public class InterestCalculationServiceTest {
         transactions.add(tr29_12);   // +100 balance from 400 - 500 period: 2 days
         transactions.add(tr31_12);   // +100 balance from 500 - 600 period: 0 days
         transactions.add(tr04_01);   // +100 balance from 600 - 700 period: 0 days
+        monthTransactions.add(tr02_12);   // +100 balance from 100 - 200 period: 0 days
+        monthTransactions.add(tr02_12_2); // +100 balance from 200 - 300 period: 7 days
+        monthTransactions.add(tr09_12);   // +100 balance from 300 - 400 period: 1 days
+        monthTransactions.add(tr10_12);   // +100 balance from 400 - 500 period: 8 days
+        monthTransactions.add(tr18_12);   // -100 balance from 500 - 400 period: 11 days
+        monthTransactions.add(tr29_12);   // +100 balance from 400 - 500 period: 2 days
+        monthTransactions.add(tr31_12);
     }
 }

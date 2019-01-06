@@ -10,7 +10,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 
-import static com.alexslo.bank.service.AccountService.SAVING_INTEREST;
+import static com.alexslo.bank.model.ServiceAccounts.SAVING_INTEREST;
 
 public class InterestCalculationService {
     private TransactionDao transactionDao;
@@ -26,21 +26,21 @@ public class InterestCalculationService {
         int accountId = savingAccount.getId();
         BigDecimal calculatedInterest = calcSavingAccountInterest(savingAccount, month);
         if (calculatedInterest.compareTo(BigDecimal.ZERO) > 0) {
-            int serviceAccId = SAVING_INTEREST.getAccountId();
-            Transaction serviceTransaction = new Transaction(serviceAccId, accountId, calculatedInterest);
+            Transaction serviceTransaction = new Transaction(SAVING_INTEREST.getAccountId(), accountId, calculatedInterest);
             savingAccount.addToBalance(calculatedInterest);
-            this.transactionDao.addTransaction(accountId, serviceTransaction);
+            transactionDao.addTransaction(accountId, serviceTransaction);
         }
     }
 
-    public BigDecimal calcSavingAccountInterest(SavingAccount savingAccount, int month) {
+    BigDecimal calcSavingAccountInterest(SavingAccount savingAccount, int month) {
         if (savingAccount == null || month < 1 || month > 12) {
             throw new IllegalArgumentException("Saving account is null or your month is not in 1-12 range");
         }
         int accountId = savingAccount.getId();
         double dailyInterest = calcDailyInterest(savingAccount);
         BigDecimal accountBalance = getAccountBalanceAtMonthEnd(savingAccount, month);
-        List<Transaction> monthTransaction = getAccountTransactionsForMonth(savingAccount, month);
+        List<Transaction> monthTransaction = transactionDao.getAccountTransactionsForMonth(accountId, month);
+        //List<Transaction> monthTransaction = getAccountTransactionsForMonth(savingAccount, month);
         List<BalanceOverPeriod> balanceOverPeriods = getBalancesOverPeriods(monthTransaction, accountId, accountBalance);
         return calcInterest(dailyInterest, balanceOverPeriods);
     }
@@ -60,7 +60,7 @@ public class InterestCalculationService {
         return monthTransactions;
     }
 
-    public List<BalanceOverPeriod> getBalancesOverPeriods(List<Transaction> transactions, int accountId, BigDecimal accountBalance) {
+    List<BalanceOverPeriod> getBalancesOverPeriods(List<Transaction> transactions, int accountId, BigDecimal accountBalance) {
         if (accountId <= 0) {
             throw new IllegalArgumentException("Incorrect accountId");
         }
@@ -89,7 +89,7 @@ public class InterestCalculationService {
         return balanceOverPeriods;
     }
 
-    public double calcDailyInterest(SavingAccount savingAccount) {
+    double calcDailyInterest(SavingAccount savingAccount) {
         if (savingAccount == null) {
             throw new IllegalArgumentException("Saving account is null");
         }
@@ -98,7 +98,7 @@ public class InterestCalculationService {
         return savingAccount.getInterestRate() / daysInYear;
     }
 
-    public BigDecimal calcInterest(double dailyInterest, List<BalanceOverPeriod> balances) {
+    BigDecimal calcInterest(double dailyInterest, List<BalanceOverPeriod> balances) {
         if (dailyInterest <= 0) {
             throw new IllegalArgumentException("Daily interest is 0 or less");
         }
@@ -117,7 +117,7 @@ public class InterestCalculationService {
         return calculatedInterest;
     }
 
-    public BigDecimal getAccountBalanceAtMonthEnd(SavingAccount account, int month) {
+    BigDecimal getAccountBalanceAtMonthEnd(SavingAccount account, int month) {
         if (account == null || month <= 0 || month > 12) {
             throw new IllegalArgumentException("Saving account is null, or incorrect month value");
         }
@@ -146,7 +146,7 @@ public class InterestCalculationService {
         return accountBalance;
     }
 
-    public BigDecimal calcBalanceBeforeTransaction(Transaction transaction, int accountId, BigDecimal accountBalance) {
+    BigDecimal calcBalanceBeforeTransaction(Transaction transaction, int accountId, BigDecimal accountBalance) {
         if (transaction == null || accountId <= 0) {
             throw new IllegalArgumentException("Transaction is null, or accountId is less then 0");
         }

@@ -1,11 +1,8 @@
 package com.alexslo.bank.dao.mem;
 
 import com.alexslo.bank.dao.TransactionDao;
-import com.alexslo.bank.model.Account;
-import com.alexslo.bank.model.SavingAccount;
 import com.alexslo.bank.model.Transaction;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

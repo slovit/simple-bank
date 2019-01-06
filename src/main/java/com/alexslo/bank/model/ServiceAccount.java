@@ -13,10 +13,6 @@ public class ServiceAccount {
         return accountServiceType;
     }
 
-    public void setAccountServiceType(Enum accountServiceType) {
-        this.accountServiceType = accountServiceType;
-    }
-
     public int getAccountId() {
         return accountId;
     }

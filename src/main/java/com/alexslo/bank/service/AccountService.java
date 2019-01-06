@@ -12,18 +12,10 @@ public class AccountService {
 
     private AccountDao accountDao;
     private TransactionDao transactionDao;
-    public static final ServiceAccount ATM = new ServiceAccount(getNextAccountId(), ServiceAccountType.ATM);
-    static final ServiceAccount SAVING_INTEREST = new ServiceAccount(getNextAccountId(), ServiceAccountType.SAVING_INTEREST);
-    private static int accountIdCounter;
 
     public AccountService(AccountDao accDao, TransactionDao trDao) {
         accountDao = accDao;
         transactionDao = trDao;
-        accountIdCounter = 1;
-    }
-
-    public static int getNextAccountId() {
-        return accountIdCounter++;
     }
 
     public SavingAccount createSavingAccount(int userId, int accountId, double interestRate) {

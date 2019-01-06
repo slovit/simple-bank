@@ -1,6 +1,7 @@
 package com.alexslo.bank.model;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 public class BalanceOverPeriod {
     private BigDecimal balance;
@@ -27,5 +28,10 @@ public class BalanceOverPeriod {
         BalanceOverPeriod balanceOverPeriod = (BalanceOverPeriod) object;
         return this.getDays() == balanceOverPeriod.getDays() && this.getBalance().equals(balanceOverPeriod
                 .getBalance());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(balance, days);
     }
 }
